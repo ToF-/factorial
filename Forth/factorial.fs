@@ -1,6 +1,8 @@
 
 
-
+\ number of multiplications by C in M
+\ e.g for 100 and 5
+\ result = 100/5 + 100/25 + 100/125 .. = 24
 
 : NB-MULT ( N,C -- m )
     >R                 \ N          | C
@@ -16,7 +18,15 @@
     R> DROP            \ m,N,d    
     DROP DROP ;        \ m
 
-\ number of trailing zeros in N!
+\ number of trailing zeros in a factorial
+\ this number is the number of times a 
+\ multiple of 5 is multiplied with a 
+\ multiple of 2
+\ e.g for 100
+\ nb of multiplications by 5 = 100/5 + 100/25 + 100/125 ... = 24
+\ nb of multiplications by 2 = 100/2 + 100/4  + 100/8   ... = 97
+\ nb of times 2 is multiplied by 5 = 24
+
 : Z ( N -- Z )
     DUP  5 NB-MULT 
     SWAP 2 NB-MULT
