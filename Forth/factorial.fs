@@ -1,22 +1,15 @@
 
 
-\ number of multiplications by C in M
-\ e.g for 100 and 5
-\ result = 100/5 + 100/25 + 100/125 .. = 24
-
-: NB-MULT ( N,C -- m )
-    >R                 \ N          | C
-    0 SWAP 1           \ 0,N,1      | C
-    BEGIN
-        R@ *           \ 0,N,d      | C
-        OVER OVER      \ m,N,d,N,d  | C
-        /              \ m,N,d,q    | C
-        >R             \ m,N,d      | C,q
-        ROT R@ +       \ N,d,m'     | C,q 
-        -ROT R>        \ m,N,d,q    | C
-    0= UNTIL           \ m,N,d      | C
-    R> DROP            \ m,N,d    
-    DROP DROP ;        \ m
+: NB-MULT  ( N,C -- m )
+    2>R                 \ keep N and C on return stack
+    0 1 BEGIN           \ accumulator, divisor on stack
+       2R@              \ get a copy of N and C
+       ROT * DUP        \ m, N, dC, dC
+       -ROT /           \ m, dC, N/dC
+       ROT OVER +       \ dC, N/dC, m+N/dC
+       -ROT             \ m+N/dC, dC, N/dC
+    0= UNTIL            \ new acc and new divison on stack
+    DROP 2R> 2DROP ;    \ get rid of all except result
 
 \ number of trailing zeros in a factorial
 \ this number is the number of times a 
