@@ -1,5 +1,6 @@
 \ given N, how many trailing zeroes in N! ?
 \ i.e how many multiplication 2*5 in N
+\ = N/5 + N/25 + N/125 + ...  
 : Z ( N -- m )
     0 SWAP 1         \ m,N,d
     BEGIN   
